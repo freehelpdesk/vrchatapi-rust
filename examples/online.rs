@@ -5,7 +5,12 @@ fn main() {
     config.basic_auth = Some((String::from("username"), Some(String::from("password"))));
 
     let me = apis::authentication_api::get_current_user(&config).unwrap();
-    println!("Username: {}", me.username);
+
+    if let Some(username) = me.username {
+        println!("Username: {}", username);
+    } else {
+        println!("Could not fetch username");
+    }
 
     let online = apis::system_api::get_current_online_users(&config).unwrap();
     println!("Current Online Users: {}", online);
